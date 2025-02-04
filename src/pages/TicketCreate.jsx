@@ -21,38 +21,24 @@ const TicketCreate = () => {
  
 
   useEffect(() => {
-    const fetchNextTicketId = async () => {
-      try {
-        const response = await fetch('https://ticketia-backend.onrender.com/tickets/next-id');
-        const data = await response.json();
-        setNextTicketId(data.nextId);
-      } catch (error) {
-        console.error('Error fetching next ticket ID:', error);
-      }
-    };
+      const fetchComments = async () => {
+        try {
+          const response = await fetch('https://ticketia-backend.onrender.com/comments');
+          const data = await response.json();
+          setComments(data);
+        } catch (error) {
+          console.error('Error fetching comments:', error);
+        }
+      };
+  
+      fetchComments();
+    }, []); // Empty dependency array means this effect runs only once when the component mounts
+    
 
-    fetchNextTicketId();
-  }, []);
-
-  // Fetch unattached comments when the component mounts
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch('https://ticketia-backend.onrender.com/comments');
-        const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    };
-
-    fetchComments();
-  }, []);
-
-  // Handle comment submission
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (newComment.trim()) {
+      console.log('Submitting comment:', newComment); // Add this line for debugging
       try {
         const response = await fetch('https://ticketia-backend.onrender.com/comments', {
           method: 'POST',
@@ -61,7 +47,6 @@ const TicketCreate = () => {
           },
           body: JSON.stringify({
             comment: newComment,
-            ticket_id: nextTicketId, // Assign the next ticket ID to the comment
           }),
         });
 
@@ -82,7 +67,6 @@ const TicketCreate = () => {
       setNewComment('');
     }
   };
-
   
   const categoryColors = {
     Hardware: "bg-[#C3D3F5]",

@@ -100,7 +100,7 @@ const DashBoard = () => {
   
     try {
       for (const ticket of selectedTickets) {
-        const response = await fetch(`https://ticketia-backend.onrender.com/${ticket.id}`, {
+        const response = await fetch(`https://ticketia-backend.onrender.com/tickets/${ticket.id}`, {
           method: 'DELETE',
         });
   
