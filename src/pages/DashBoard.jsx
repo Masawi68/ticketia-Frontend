@@ -32,7 +32,7 @@ const DashBoard = () => {
 
   const fetchTickets = async () => {
     try {
-      const response = await fetch('https://ticketia-backend.onrender.com'); // Replace with your backend API URL
+      const response = await fetch('https://ticketia-backend.onrender.com/tickets'); // Replace with your backend API URL
       const data = await response.json();
       setTickets(data);
     } catch (error) {
